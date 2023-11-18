@@ -7,6 +7,12 @@ const {
   deletePlant,
   updatePlant,
 } = require("../queries/plant");
+const {
+  checkName,
+  checkDescription,
+  checkMoistureNeeds,
+  checkBoolean,
+} = require("../validations/checkPlants");
 
 plants.get("/", async (req, res) => {
   const allPlants = await getAllPlants();
@@ -27,11 +33,18 @@ plants.get("/:id", async (req, res) => {
   }
 });
 
-plants.post("/", async (req, res) => {
-  const body = req.body;
-  const newPlant = await createPlant(body);
-  res.status(200).json(newPlant);
-});
+plants.post(
+  "/",
+  checkName,
+  checkDescription,
+  checkMoistureNeeds,
+  checkBoolean,
+  async (req, res) => {
+    const body = req.body;
+    const newPlant = await createPlant(body);
+    res.status(200).json(newPlant);
+  }
+);
 
 plants.delete("/:id", async (req, res) => {
   const { id } = req.params;
@@ -44,15 +57,22 @@ plants.delete("/:id", async (req, res) => {
   }
 });
 
-plants.put("/:id", async (req, res) => {
-  const { id } = req.params;
-  const body = req.body;
-  const updatedPlant = await updatePlant(id, body);
-  if (updatedPlant.id) {
-    res.status(200).json(updatedPlant);
-  } else {
-    res.status(404).json({ error: "Plant Not Found" });
+plants.put(
+  "/:id",
+  checkName,
+  checkDescription,
+  checkMoistureNeeds,
+  checkBoolean,
+  async (req, res) => {
+    const { id } = req.params;
+    const body = req.body;
+    const updatedPlant = await updatePlant(id, body);
+    if (updatedPlant.id) {
+      res.status(200).json(updatedPlant);
+    } else {
+      res.status(404).json({ error: "Plant Not Found" });
+    }
   }
-});
+);
 
 module.exports = plants;

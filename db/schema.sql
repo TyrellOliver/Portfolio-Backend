@@ -9,7 +9,7 @@ CREATE TABLE plants (
     price DECIMAL(10, 2),
     in_stock BOOL DEFAULT false,
     image_url VARCHAR(255),
-    description TEXT,
-    moisture_needs TEXT,
-    safe_for_pets BOOL DEFAULT false
+    description TEXT NOT NULL,
+    moisture_needs TEXT NOT NULL,
+    safe_for_pets BOOL NOT NULL DEFAULT false
 );
