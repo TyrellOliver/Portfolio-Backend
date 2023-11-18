@@ -1,6 +1,13 @@
 const db = require("../db/dbConfig");
 
-const getAllPlants = () => {};
+const getAllPlants = async () => {
+  try {
+    const allPlants = await db.any("SELECT * FROM plants");
+    return allPlants;
+  } catch (error) {
+    return error;
+  }
+};
 
 const getOnePlant = () => {};
 

@@ -1,8 +1,21 @@
-const express = require('express');
+const express = require("express");
 const plants = express.Router();
+const {
+  getAllPlants,
+  getOnePlant,
+  createPlant,
+  deletePlant,
+  updatePlant,
+} = require("../queries/plant");
 
-plants.get('/', (req, res) =>{
-    res.send('Welcome to the plants page!')
+plants.get("/", async (req, res) => {
+  const allPlants = await getAllPlants();
+  console.log(`All the plants ${allPlants}`);
+  if (allPlants) {
+    res.status(200).json(allPlants);
+  } else {
+    res.status(500).json({ error: "Server Error" });
+  }
 });
 
 module.exports = plants;
