@@ -1,11 +1,11 @@
 const express = require("express");
 const app = express();
 
-const herbsController = require("./controllers/herbsController");
+const plantsController = require("./controllers/plantsController");
 
 // Middleware
 app.use(express.json());
-app.use("/herbs", herbsController);
+app.use("/plants", plantsController);
 
 // Routes:
 app.get("/", (req, res) => {
