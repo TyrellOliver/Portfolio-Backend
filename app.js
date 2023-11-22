@@ -1,9 +1,12 @@
 const express = require("express");
 const app = express();
 
+const cors = require("cors")
+
 const plantsController = require("./controllers/plantsController");
 
 // Middleware
+app.use(cors())
 app.use(express.json());
 app.use("/plants", plantsController);
 
